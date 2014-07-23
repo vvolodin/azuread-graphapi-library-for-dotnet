@@ -71,6 +71,11 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
         public override object ReadJson(
             JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (reader.TokenType == JsonToken.Null)
+            {
+                // Json element is null
+                return null;
+            }
             if (reader.TokenType == JsonToken.StartArray)
             {
                 JToken jsonToken = JArray.ReadFrom(reader);
